@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Orders</title>
+		<link rel="stylesheet" th:href="@{/styles.css}" />
+	</head>
+	
+	<body>
+		<div class="orderlist" th:each="order:${orderlist}">
+			<span th:text="${order.name}">ORDER</span><br/>
+			<span th:text="${order.state}">ORDER</span><br/>
+			<span th:text="${order.city}">ORDER</span><br/>
+			<span th:text="${order.zip}">ORDER</span><br/>
+			<span th:text="${order.street}">ORDER</span><br/>
+			<span th:text="${order.ccNumber}">ORDER</span><br/>
+			<span th:text="${order.ccExparation}">ORDER</span><br/>
+			<span th:text="${order.ccCVV}">ORDER</span><br/>
+			
+		</div>
+	
+	</body>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
