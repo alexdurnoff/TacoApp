@@ -1,5 +1,8 @@
 package ru.durnov.taco;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.CreditCardNumber;
@@ -8,6 +11,10 @@ import lombok.Data;
 
 @Data
 public class Order {
+	private long id;
+	private Date createAt;
+	private Date placedAt;
+	private List<Taco> tacos;
 	@NotBlank(message="name is requred")
 	private String name;
 	@NotBlank(message="street is requred")
@@ -24,4 +31,7 @@ public class Order {
 	private String ccExpiration;
 	@Digits (integer=3, fraction=0, message="Invalid CVV")
 	private String ccCVV;
+	public void addDesign(Taco saved) {
+		this.tacos.add(saved);
+	}
 }
