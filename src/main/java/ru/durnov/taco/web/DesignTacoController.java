@@ -31,12 +31,12 @@ import lombok.Data;
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("order")
-public class DesighTacoController {
+public class DesignTacoController {
 	private final IngredientRepository ingredientRepo;
 	private TacoRepository designRepo;
 	
 	@Autowired
-	public DesighTacoController(IngredientRepository ingredientRepo, TacoRepository designRepo) {
+	public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository designRepo) {
 		this.ingredientRepo = ingredientRepo;
 		this.designRepo = designRepo;
 	}
@@ -47,17 +47,23 @@ public class DesighTacoController {
 		ingredientRepo.findAll().forEach(i-> ingredients.add(i));
 		Type[] types = Ingredient.Type.values();
 		for(Type type:types) {
+			log.info(type.name());
 			model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
 		}
-		model.addAttribute("design", new Taco());
+		//model.addAttribute("design", new Taco());
 		return "design";
 	}
 	
 	private List<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
+		List<Ingredient> ingredientList = new ArrayList<>();
+		for (Ingredient ingredient : ingredients){
+			if (ingredient.getType().equals(type)) ingredientList.add(ingredient);
+		}
+		return ingredientList;
 
-	    return ingredients.stream()
+	    /*return ingredients.stream()
 	            .filter(x -> x.getType().equals(type))
-	            .collect(Collectors.toList());
+	            .collect(Collectors.toList());*/
 
 	}
 	
@@ -74,6 +80,7 @@ public class DesighTacoController {
 	 @PostMapping
 	 public String processDesign( @Valid Taco design, Errors errors, @ModelAttribute Order order) {
 	   if (errors.hasErrors()) {
+	   	log.info(errors.toString());
 	     return "design";
 	   }
 	   Taco saved = designRepo.save(design);
