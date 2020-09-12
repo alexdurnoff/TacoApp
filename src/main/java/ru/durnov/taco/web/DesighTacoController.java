@@ -25,6 +25,7 @@ import ru.durnov.taco.Order;
 import ru.durnov.taco.Taco;
 import ru.durnov.taco.data.IngredientRepository;
 import ru.durnov.taco.data.TacoRepository;
+import lombok.Data;
 
 @Slf4j
 @Controller
@@ -48,9 +49,7 @@ public class DesighTacoController {
 		for(Type type:types) {
 			model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
 		}
-		
 		model.addAttribute("design", new Taco());
-		
 		return "design";
 	}
 	
