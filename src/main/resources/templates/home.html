@@ -1,6 +1,5 @@
 <! DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<title>taco Cloud</title>
 	</head>
@@ -8,5 +7,8 @@
 	<body>
 		<h1>preved, Durned!!!</h1>
 		<img th:src="@{/images/s1200.jpeg}"/>
+		<form method="POST" th:action="@{/logout}">
+			<input type="submit" value="Logout">
+		</form>
 	</body>
 </html>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html>
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 	<head>
 		<title>Orders</title>
 		<link rel="stylesheet" th:href="@{/styles.css}" />
@@ -19,18 +18,11 @@
 			<span th:text="${order.ccCVV}">ORDER</span><br/>
 			
 		</div>
+
+		<form method="POST" th:action="@{/logout}">
+			<input type="submit" value="Logout">
+		</form>
 	
 	</body>
-
-
-
-
-
-
-
-
-
-
-
 
 </html>

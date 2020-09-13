@@ -1,6 +1,8 @@
 package ru.durnov.taco.web;
 
 import javax.validation.Valid;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import ru.durnov.taco.Order;
+import ru.durnov.taco.User;
 import ru.durnov.taco.data.OrderRepository;
 
 @Controller
@@ -29,7 +32,8 @@ public class OrderController {
 	
 	
 	@PostMapping
-	public String processOrder(@Valid Order order, Errors errors, SessionStatus sessionStatus) {
+	public String processOrder(@Valid Order order, Errors errors, SessionStatus sessionStatus,
+							   @AuthenticationPrincipal User user) {
 		if (errors.hasErrors()) {
 			return "orderForm";
 		}

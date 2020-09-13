@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to Durnovs cloud!!!</title>
+</head>
+<body>
+    <h1>login</h1>
+    <img th:src="@{/images/s1200.jpeg}" />
+    <div th:if="${error}">Неправильный логин, проверьте и введите еще раз</div>
+    <p> Новенький здесь? Жмите
+    <a th:href="@{register}">СЮДА!!!!</a>для регистрации</p>
+    <form method="POST" th:action="@{login}" id="loginForm">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username"/><br/>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+        <input type="submit" value="Login">
+    </form>
+    <form method="POST" th:action="@{/logout}">
+        <input type="submit" value="Logout">
+    </form>
+</body>
+</html>
