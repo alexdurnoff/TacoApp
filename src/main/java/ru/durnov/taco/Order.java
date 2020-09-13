@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class Order implements Serializable{
 
-	private long id;
+	private Long id;
 	private Date createAt;
 	private Date placedAt;
 	private List<Taco> tacos = new ArrayList<>();

@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Data
 public class Taco {
-	private long id;
-	private Date createAt;
+	private Long id;
+	private Date createdAt;
 	@NotNull
 	@Size(min=5, message="Name must be at least 5 characters long")
 	private String name;
@@ -17,7 +17,7 @@ public class Taco {
 	private List<Ingredient> ingredients;
 
 	void createdAt() {
-		this.createAt = new Date();
+		this.createdAt = new Date();
 	}
 
 }
