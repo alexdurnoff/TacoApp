@@ -42,15 +42,15 @@ public class User implements UserDetails{
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
-    @Override
+   /* @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
-    }
+        return username;
+    }*/
 
     @Override
     public boolean isAccountNonExpired() {
