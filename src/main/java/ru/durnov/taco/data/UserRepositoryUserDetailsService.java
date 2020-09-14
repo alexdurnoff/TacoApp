@@ -17,6 +17,7 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
     }
 
     //Непонятно, почему вместо UserDetails в методе ниже вернули просто user?! В книге об этом ничего не сказано...
+    //Сообразил: User имплиментирует UserDetails, поэтому можно считать, что возвращен UserDetails.
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username);

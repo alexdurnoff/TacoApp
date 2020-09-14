@@ -1,9 +1,11 @@
 package ru.durnov.taco.security;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.durnov.taco.User;
 
+@Slf4j
 @Data
 public class RegistrationForm {
     private String username;
@@ -16,7 +18,9 @@ public class RegistrationForm {
     private String phone;
 
     public User toUser(PasswordEncoder passwordEncoder){
-        return new User(username, passwordEncoder.encode(password),
-                fullname, street, city, state, zip, phone);
+        log.info("registerForm - " + username);
+        User user = new User(username, passwordEncoder.encode(password), fullname, street, city, state, zip, phone);
+        log.info("Registerform username - " + user.getUsername());
+        return user;
     }
 }

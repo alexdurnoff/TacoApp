@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder encoder(){
-        return new StandardPasswordEncoder();
+        return new StandardPasswordEncoder("53cr3t");
     }
 
     @Override
