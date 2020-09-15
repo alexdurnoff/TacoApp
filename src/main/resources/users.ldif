@@ -1,0 +1,22 @@
+dn: ou=groups,dc=taco,dc=durnov
+objectclass: top
+objectclass: organizationalUnit
+ou: groups
+dn: ou=people,dc=taco,dc=durnov
+objectclass: top
+objectclass: organizationalUnit
+ou: people
+dn: uid=alexdurnoff,ou=people,dc=taco,dc=durnov
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Alexej Durnov
+sn: Durnov
+uid: alexdurnov
+userPassword: 1111
+dn: cn=taco,ou=groups,dc=taco,dc=com
+objectclass: top
+objectclass: groupOfNames
+cn: taco
+member: uid=alexdurnoff,ou=people,dc=taco,dc=com

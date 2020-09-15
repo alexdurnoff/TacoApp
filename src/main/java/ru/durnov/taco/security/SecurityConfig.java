@@ -24,8 +24,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-        .passwordEncoder(encoder());
+        auth.ldapAuthentication()
+                .userSearchFilter("(uid={0})")
+                .groupSearchFilter("member={0}")
+                .contextSource()
+                .ldif("classpath:users.ldif");
     }
 
    @Override
