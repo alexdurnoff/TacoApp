@@ -73,16 +73,11 @@ public class DesighTacoController {
 
 	 @PostMapping
 	 public String processDesign( @Valid Taco design, Errors errors, @ModelAttribute Order order) {
-	    log.info("Design POST вызван!");
-	    System.out.println("Бля");
 		if (errors.hasErrors()) {
-			log.info(errors.toString());
 	     return "design";
 	   }
 	   Taco saved = designRepo.save(design);
-		log.info("Тако создан!");
 	    order.addDesign(saved);
-	    log.info("Тако сохранен");
 	   return "redirect:/orders/current";
 	 }
 

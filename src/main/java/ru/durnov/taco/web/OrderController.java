@@ -37,8 +37,6 @@ public class OrderController {
 	@PostMapping
 	public String processOrder(@Valid Order order, Errors errors, SessionStatus sessionStatus,
 							   @AuthenticationPrincipal User user) {
-	 	log.info("Вызван PostMapping");
-		log.info(user.getAuthorities().toString());
 		if (errors.hasErrors()) {
 			return "orderForm";
 		}

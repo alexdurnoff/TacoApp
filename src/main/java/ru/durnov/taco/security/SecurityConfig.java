@@ -33,10 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/design", "/orders", "/orders/**")
                 .hasRole("USER")
-                .antMatchers("/", "/**").permitAll()
+                .antMatchers("/", "/**")
+                .permitAll()
         .and().formLogin().loginPage("/login").defaultSuccessUrl("/design")
-        .and().logout().logoutSuccessUrl("/")
-        .and().csrf().disable();
+        .and().logout().logoutSuccessUrl("/");
+        //.and().csrf().disable();
     }
 
     /*@Override
