@@ -28,11 +28,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .passwordEncoder(encoder());
     }
 
-    @Override
+   @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/design", "/orders")
-                .hasRole("USER").antMatchers("/", "/**").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/design", "/orders", "/orders/**")
+                .hasRole("USER")
+                .antMatchers("/", "/**").permitAll()
         .and().formLogin().loginPage("/login").defaultSuccessUrl("/design")
-        .and().logout().logoutSuccessUrl("/");
+        .and().logout().logoutSuccessUrl("/")
+        .and().csrf().disable();
     }
+
+    /*@Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/", "/**").permitAll()
+                .and().formLogin().loginPage("/login")
+                .defaultSuccessUrl("/design")
+                .and().logout().logoutSuccessUrl("/");
+    }*/
 }

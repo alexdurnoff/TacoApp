@@ -30,20 +30,14 @@ public class RegistrationController {
         return "registration";
     }
 
+
+    //Здесь мне непонятно: каким образом объект form привязывался к запросу?!
+    //В объявдении формы в html не было этого объекта... Я сам добавил th:object="${form}"...
+    //Самое интересное, что ничего не изменилось. Все работало также и без th:object="${form}".
+    //Возможно, объект-аргумент метода @PostMapping автоматически заполняется из формы html?
     @PostMapping
     public String processRegistration(RegistrationForm form){
-        log.info(form.getUsername());
         userRepo.save(form.toUser(passwordEncoder));
-        Iterable<User> users = userRepo.findAll();
-        for (User user : users) {
-            log.info(String.valueOf(user.getId()));
-            log.info(user.getUsername());
-            log.info(user.getPhoneNumber());
-            log.info(user.getCity());
-            log.info(user.getState());
-            log.info(user.getStreet());
-            log.info(user.getZip());
-        }
         return "redirect:/login";
     }
 }

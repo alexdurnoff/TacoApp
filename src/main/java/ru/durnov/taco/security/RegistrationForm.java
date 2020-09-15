@@ -18,9 +18,7 @@ public class RegistrationForm {
     private String phone;
 
     public User toUser(PasswordEncoder passwordEncoder){
-        log.info("registerForm - " + username);
         User user = new User(username, passwordEncoder.encode(password), fullname, street, city, state, zip, phone);
-        log.info("Registerform username - " + user.getUsername());
         return user;
     }
 }
