@@ -1,17 +1,17 @@
 package ru.durnov.taco.web.api;
 
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.hateoas.EntityLinks;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.EntityLinks;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ru.durnov.taco.Taco;
 import ru.durnov.taco.data.TacoRepository;
 
@@ -31,14 +31,22 @@ public class DesignTacoController {
         this.tacoRepo = tacoRepo;
     }
 
+
+    //Выяснилось, что классы Resources, Resource заменены теперь на CollectionModel, EntityModel
+    //А класс ControllerLinkBuilder теперь deprecated. Пока так, потом попробуем по-другому.
+    //Ну вот, вместо ControllerLinkBuilder теперь WebMvcLinkBuilder.
     @GetMapping("/recent")
-    public Resources<Resource<Taco>> recentTacos() {
+    public CollectionModel<EntityModel<Taco>> recentTacos() {
         PageRequest page = PageRequest.of(
                 0, 12, Sort.by("createdAt").descending());
         List<Taco> tacos = tacoRepo.findAll(page).getContent();
-        Resources<Resource<Taco>> recentResources = Resources.wrap(tacos);
-        recentResources.add(
-                new Link("http://localhost:8080/design/recent", "recents"));
+        List<TacoResource> tacoResources = (List<TacoResource>) new TacoResourceAssembler().toCollectionModel(tacos);
+        //CollectionModel<EntityModel<Taco>> recentResources = CollectionModel.wrap(tacos);
+        CollectionModel<TacoResource> recentResources = new CollectionModel<>(tacoResources);
+        Link link = WebMvcLinkBuilder.linkTo(DesignTacoController.class)
+                .slash("recent")
+                .withRel("recents");
+        recentResources.add(link);
         return recentResources;
     }
 
