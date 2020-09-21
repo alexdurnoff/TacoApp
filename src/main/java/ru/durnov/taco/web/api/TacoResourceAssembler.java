@@ -28,4 +28,5 @@ public class TacoResourceAssembler extends RepresentationModelAssemblerSupport<T
     protected TacoResource instantiateModel(Taco taco){
         return new TacoResource(taco);
     }
+
 }

@@ -47,9 +47,8 @@ public class DesignTacoController {
         * из класса TacoResourceAssembler можно получить CollectionModel просто в лоб... И вроде бы
         * все красиво вырисовывается...*/
         CollectionModel<TacoResource> recentResources = new TacoResourceAssembler().toCollectionModel(tacos);
-        Link link = WebMvcLinkBuilder.linkTo(DesignTacoController.class)
-                .slash("recent")
-                .withRel("recents");
+        Link link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(DesignTacoController.class)
+                .recentTacos()).withRel("recents");
         recentResources.add(link);
         return recentResources;
     }
