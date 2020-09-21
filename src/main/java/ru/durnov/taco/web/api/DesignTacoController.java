@@ -5,7 +5,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -36,13 +35,18 @@ public class DesignTacoController {
     //А класс ControllerLinkBuilder теперь deprecated. Пока так, потом попробуем по-другому.
     //Ну вот, вместо ControllerLinkBuilder теперь WebMvcLinkBuilder.
     @GetMapping("/recent")
-    public CollectionModel<EntityModel<Taco>> recentTacos() {
+    public CollectionModel<TacoResource> recentTacos() {
         PageRequest page = PageRequest.of(
                 0, 12, Sort.by("createdAt").descending());
         List<Taco> tacos = tacoRepo.findAll(page).getContent();
-        List<TacoResource> tacoResources = (List<TacoResource>) new TacoResourceAssembler().toCollectionModel(tacos);
+        //List<TacoResource> tacoResources = (List<TacoResource>) new TacoResourceAssembler().toCollectionModel(tacos);
         //CollectionModel<EntityModel<Taco>> recentResources = CollectionModel.wrap(tacos);
-        CollectionModel<TacoResource> recentResources = new CollectionModel<>(tacoResources);
+        //CollectionModel<TacoResource> recentResources = CollectionModel.of(tacoResources);
+        /*Из трехпредыдущих строк первые две - мое творчество. Вернулся к этому классу через три дня,
+        * и уже не помню, чего я хотел тогда сказать. Там был uncheckedCust, кстати. Тогда как
+        * из класса TacoResourceAssembler можно получить CollectionModel просто в лоб... И вроде бы
+        * все красиво вырисовывается...*/
+        CollectionModel<TacoResource> recentResources = new TacoResourceAssembler().toCollectionModel(tacos);
         Link link = WebMvcLinkBuilder.linkTo(DesignTacoController.class)
                 .slash("recent")
                 .withRel("recents");
@@ -53,7 +57,8 @@ public class DesignTacoController {
     @GetMapping("/{id}")
     public ResponseEntity<Taco> tacoById(@PathVariable("id") Long id){
         Optional<Taco> optTaco = tacoRepo.findById(id);
-        return optTaco.map(taco -> new ResponseEntity<>(taco, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
+        return optTaco.map(taco -> new ResponseEntity<>(taco, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
     @PostMapping(consumes = "application/json")
