@@ -1,15 +1,22 @@
 package ru.durnov.taco.web.api;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
+import ru.durnov.taco.Ingredient;
 import ru.durnov.taco.Taco;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+@Slf4j
 @Relation(value = "taco", collectionRelation = "tacos")
-public class TacoResource extends EntityModel<Taco> {
+public class TacoResource extends RepresentationModel<TacoResource> {
     private static final IngredientResourceAssembler ingredientResourceAssembler = new IngredientResourceAssembler();
 
     @Getter
@@ -19,22 +26,25 @@ public class TacoResource extends EntityModel<Taco> {
     private final Date createAt;
 
 
-    //private final List<IngredientResource> ingredients;
     @Getter
     private final CollectionModel<IngredientResource> ingredients;
+    //private final Collection<IngredientResource> ingredients;
+    //private final List<IngredientResource> ingredients;
 
     public TacoResource(Taco taco){
         this.name = taco.getName();
         this.createAt = taco.getCreateAt();
-        //this.ingredients = new ArrayList<>();
-        //List<Ingredient> tacoIngredients = taco.getIngredients();
+        /*this.ingredients = new ArrayList<>();
+        List<Ingredient> tacoIngredients = taco.getIngredients();*/
         //В связи с новой api в hateoas у меня туповато-кривой конструктор. Но должно работать. Не понял пока,
         //как сделать изящно...
         /*for (Ingredient ingredient:tacoIngredients){
             ingredients.add(ingredientResourceAssembler.toModel(ingredient));
+            log.info(ingredients.toString());
         }*/
         //Сейчас попробую изящно))) Меняю поле с типа List на CollectionModel
         this.ingredients = ingredientResourceAssembler.toCollectionModel(taco.getIngredients());
+        log.info(ingredients.toString());
         //Вот так, вроде, правильно.
     }
 }

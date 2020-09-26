@@ -1,8 +1,10 @@
 package ru.durnov.taco.web.api;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import ru.durnov.taco.Taco;
+
 
 public class TacoResourceAssembler extends RepresentationModelAssemblerSupport<Taco, TacoResource> {
 
@@ -16,13 +18,13 @@ public class TacoResourceAssembler extends RepresentationModelAssemblerSupport<T
     /**
      * Converts the given entity into a {@code D}, which extends {@link RepresentationModel}.
      *
-     * @param entity
+     * @param taco
      * @return
      */
 
     @Override
-    public TacoResource toModel(Taco entity) {
-        return createModelWithId(entity.getId(), entity);
+    public TacoResource toModel(Taco taco) {
+        return createModelWithId(taco.getId(), taco);
     }
 
     protected TacoResource instantiateModel(Taco taco){
