@@ -13,12 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.durnov.taco.Ingredient;
+import ru.durnov.taco.Order;
 import ru.durnov.taco.Taco;
-import ru.durnov.taco.data.TacoRepository;
 import ru.durnov.taco.data.IngredientRepository;
+import ru.durnov.taco.data.OrderRepository;
+import ru.durnov.taco.data.TacoRepository;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,13 +30,15 @@ import java.util.Optional;
 public class DesignTacoController {
     private TacoRepository tacoRepo;
     private IngredientRepository ingredientRepo;
+    private OrderRepository orderRepo;
 
     @Autowired
     EntityLinks entityLinks;
 
-    public DesignTacoController(TacoRepository tacoRepo, IngredientRepository ingredientRepo){
+    public DesignTacoController(TacoRepository tacoRepo, IngredientRepository ingredientRepo, OrderRepository orderRepo){
         this.tacoRepo = tacoRepo;
         this.ingredientRepo = ingredientRepo;
+        this.orderRepo = orderRepo;
     }
 
 
@@ -71,7 +74,7 @@ public class DesignTacoController {
         return recentResources;
     }
 
-    @GetMapping("/ingredients")
+    @GetMapping("/ingredients")//Чисто мой обработчик для проверки работы прилодения и отладки.
     public CollectionModel<IngredientResource> getIngredients(){
         List<Ingredient> ingredients = new ArrayList<>();
        for(Ingredient ingredient:ingredientRepo.findAll()){
@@ -83,6 +86,15 @@ public class DesignTacoController {
         return ingredientResources;
     }
 
+    @GetMapping("/orders")//Тоде чисто мой контроллер. Потому то в OrderController даже логи не пишутся... Вроде есть, а вроде и нет
+    public ArrayList<Order> getAllOrders(){
+        log.info("invoke get method orders");
+        ArrayList<Order> orders = new ArrayList<>();
+        for(Order order:orderRepo.findAll()) orders.add(order);
+        log.info("order list created");
+        log.info(String.valueOf(orders.size()));
+        return orders;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Taco> tacoById(@PathVariable("id") Long id){

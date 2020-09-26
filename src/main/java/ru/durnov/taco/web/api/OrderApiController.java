@@ -3,38 +3,43 @@ package ru.durnov.taco.web.api;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.durnov.taco.Order;
 import ru.durnov.taco.data.OrderRepository;
 
-import java.util.Optional;
-
 @RestController
-@RequestMapping("/orders")
-public class OrderController {
-    private OrderRepository orderRepo;
+@RequestMapping(path="/orders",
+        produces="application/json")
+@CrossOrigin(origins="*")
+public class OrderApiController {
 
-    public OrderController(OrderRepository orderRepo){
-        this.orderRepo = orderRepo;
+    private OrderRepository repo;
+
+    public OrderApiController(OrderRepository repo) {
+        this.repo = repo;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Order> getById(Long id){
-        Optional<Order> order = orderRepo.findById(id);
-        if (order.isPresent()) return new ResponseEntity<>(order.get(), HttpStatus.OK);
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    @GetMapping(produces="application/json")
+    public Iterable<Order> allOrders() {
+        return repo.findAll();
     }
 
-    @PutMapping("/{orderId}")
+    @PostMapping(consumes="application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Order postOrder(@RequestBody Order order) {
+        return repo.save(order);
+    }
+
+    @PutMapping(path="/{orderId}", consumes="application/json")
     public Order putOrder(@RequestBody Order order) {
-        return orderRepo.save(order);
+        return repo.save(order);
     }
 
     @PatchMapping(path="/{orderId}", consumes="application/json")
     public Order patchOrder(@PathVariable("orderId") Long orderId,
                             @RequestBody Order patch) {
-        Order order = orderRepo.findById(orderId).get();
+
+        Order order = repo.findById(orderId).get();
         if (patch.getName() != null) {
             order.setName(patch.getName());
         }
@@ -59,16 +64,15 @@ public class OrderController {
         if (patch.getCcCVV() != null) {
             order.setCcCVV(patch.getCcCVV());
         }
-        return orderRepo.save(order);
+        return repo.save(order);
     }
 
     @DeleteMapping("/{orderId}")
-    @ResponseStatus(code=HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable ("orderId") Long orderId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOrder(@PathVariable("orderId") Long orderId) {
         try {
-            orderRepo.deleteById(orderId);
-        } catch (EmptyResultDataAccessException exception) {
-
-        }
+            repo.deleteById(orderId);
+        } catch (EmptyResultDataAccessException e) {}
     }
+
 }
