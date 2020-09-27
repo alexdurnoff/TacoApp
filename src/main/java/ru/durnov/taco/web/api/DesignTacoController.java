@@ -47,14 +47,14 @@ public class DesignTacoController {
     //Ну вот, вместо ControllerLinkBuilder теперь WebMvcLinkBuilder.
     @GetMapping("/recents")
     public CollectionModel<TacoResource> recentTacos() {
-        Taco myTaco = new Taco();
-        myTaco.setName("BullShit");
-        ArrayList<Ingredient> myIngredients = new ArrayList<>();
+        Taco taco = new Taco();
+        taco.setName("Durnovs_Forever!!!");
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
         for (Ingredient ingredient:ingredientRepo.findAll()){
-            myIngredients.add(ingredient);
+            ingredients.add(ingredient);
         }
-        myTaco.setIngredients(myIngredients);
-        tacoRepo.save(myTaco);
+        taco.setIngredients(ingredients);
+        tacoRepo.save(taco);
         PageRequest page = PageRequest.of(
                 0, 12, Sort.by("createAt").descending());
         List<Taco> tacos = tacoRepo.findAll(page).getContent();
@@ -117,9 +117,6 @@ public class DesignTacoController {
         } catch (EmptyResultDataAccessException exception){
 
         }
-
     }
-
-
 
 }
