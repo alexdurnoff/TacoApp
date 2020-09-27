@@ -1,10 +1,15 @@
 package ru.durnov.taco.web.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.EntityLinks;
+import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +22,8 @@ import java.util.List;
 @RepositoryRestController
 public class RecentTacosRestController {
     private TacoRepository tacoRepo;
+
+    @Autowired EntityLinks entityLinks;
 
     public RecentTacosRestController(TacoRepository tacoRepo){
         this.tacoRepo = tacoRepo;
@@ -32,5 +39,16 @@ public class RecentTacosRestController {
                 .recentTacos()).withRel("recents");
         recentResources.add(link);
         return new ResponseEntity<>(recentResources, HttpStatus.OK);
+    }
+
+    @Bean
+    public RepresentationModelProcessor<EntityModel<Taco>> tacoProcessor(EntityLinks entityLinks){
+        return new RepresentationModelProcessor<EntityModel<Taco>>() {
+            @Override
+            public EntityModel<Taco> process(EntityModel<Taco> model) {
+                model.add(entityLinks.linkFor(Taco.class).slash("recents").withRel("recents"));
+                return model;
+            }
+        };
     }
 }

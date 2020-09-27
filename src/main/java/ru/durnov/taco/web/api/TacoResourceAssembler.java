@@ -1,6 +1,5 @@
 package ru.durnov.taco.web.api;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import ru.durnov.taco.Taco;
@@ -30,5 +29,7 @@ public class TacoResourceAssembler extends RepresentationModelAssemblerSupport<T
     protected TacoResource instantiateModel(Taco taco){
         return new TacoResource(taco);
     }
+
+
 
 }
