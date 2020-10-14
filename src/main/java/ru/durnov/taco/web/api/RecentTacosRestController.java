@@ -41,7 +41,7 @@ public class RecentTacosRestController {
         return new ResponseEntity<>(recentResources, HttpStatus.OK);
     }
 
-    @Bean
+   @Bean
     public RepresentationModelProcessor<EntityModel<Taco>> tacoProcessor(EntityLinks entityLinks){
         return new RepresentationModelProcessor<EntityModel<Taco>>() {
             @Override
