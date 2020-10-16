@@ -15,7 +15,7 @@ import java.util.List;
 public class Taco {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id;
+	private Long id;
 	private Date createAt;
 	@NotNull
 	@Size(min=5, message="Name must be at least 5 characters long")

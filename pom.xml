@@ -31,7 +31,7 @@
         </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 
 		<dependency>
@@ -103,10 +103,7 @@
 			<groupId>org.springframework.integration</groupId>
 			<artifactId>spring-integration-file</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.integration</groupId>
-			<artifactId>spring-integration-file</artifactId>
-		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-mail -->
 		<dependency>
 			<groupId>org.springframework.integration</groupId>
@@ -126,6 +123,16 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-text</artifactId>
 			<version>1.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 

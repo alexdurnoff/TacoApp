@@ -1,5 +1,4 @@
-package ru.durnov.taco.email;
-
+package ru.durnov.taco;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -9,8 +8,10 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-public class Ingredient {
-    private final String code;
+//@UserDefinedType("ingredient")
+public class IngredientUDT {
     private final String name;
-
+    private final Ingredient.Type type;
 }
+
+
