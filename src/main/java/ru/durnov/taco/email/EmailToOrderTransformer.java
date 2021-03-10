@@ -1,6 +1,6 @@
 package ru.durnov.taco.email;
 
-import org.aspectj.weaver.ast.Or;
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.integration.mail.transformer.AbstractMailMessageTransformer;
 import org.springframework.integration.support.AbstractIntegrationMessageBuilder;
 import org.springframework.integration.support.MessageBuilder;
@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.text.similarity.LevenshteinDistance;
-
 public class EmailToOrderTransformer extends AbstractMailMessageTransformer<Order> {
     private static final String SUBJECT_KEYWORDS = "TACO ORDER";
 
@@ -22,7 +20,8 @@ public class EmailToOrderTransformer extends AbstractMailMessageTransformer<Orde
     protected AbstractIntegrationMessageBuilder<Order> doTransform(javax.mail.Message message)
             throws Exception {
         Order tacoOrder = processPayload(message);
-        return MessageBuilder.withPayload(tacoOrder);
+        if (tacoOrder != null) return MessageBuilder.withPayload(tacoOrder);
+        return MessageBuilder.withPayload(new Order("door1975@yandex.ru"));
     }
 
     private Order processPayload(Message message) {
