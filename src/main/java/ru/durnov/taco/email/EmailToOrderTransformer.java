@@ -4,6 +4,7 @@ import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.springframework.integration.mail.transformer.AbstractMailMessageTransformer;
 import org.springframework.integration.support.AbstractIntegrationMessageBuilder;
 import org.springframework.integration.support.MessageBuilder;
+import org.springframework.stereotype.Component;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class EmailToOrderTransformer extends AbstractMailMessageTransformer<Order> {
     private static final String SUBJECT_KEYWORDS = "TACO ORDER";
 

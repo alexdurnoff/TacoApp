@@ -2,10 +2,13 @@ package ru.durnov.taco.email;
 
 import org.springframework.integration.handler.GenericHandler;
 import org.springframework.messaging.MessageHeaders;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
+
+@Component
 public class OrderSubmitMessageHandler implements GenericHandler<Order> {
     private RestTemplate rest;
     private  ApiProperties apiProps;
